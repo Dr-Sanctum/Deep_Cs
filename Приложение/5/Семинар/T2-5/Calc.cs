@@ -52,7 +52,7 @@ namespace T2_5
             string[] expression;
             while (run)
             {
-                Console.WriteLine("Введите выражение в виде X + Y, допустимые действия + - / *, чтобы выйти введите 0");
+                Console.WriteLine("Введите выражение в виде X + Y, допустимые действия + - / *, чтобы выйти введите 0 или пустую строку");
                 try
                 {
                     expression = Console.ReadLine().Split(" ");
@@ -63,8 +63,7 @@ namespace T2_5
                 }
                 catch (NullReferenceException)
                 {
-                    Console.WriteLine("Неверный формат ввода");
-                    continue;
+                    break;
                 }
 
                 try
