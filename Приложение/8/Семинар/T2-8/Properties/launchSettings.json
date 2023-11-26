@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "T2-8": {
+      "commandName": "Project",
+      "commandLineArgs": "\"E:\\гикбрэйнс\\Deep C#\\Приложение\\8\\Семинар\\T2-8\\bin\\Debug\\net7.0\" .txt 456"
+    }
+  }
+}
