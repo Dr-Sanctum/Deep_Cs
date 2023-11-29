@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿//Напишите приложение, конвертирующее произвольный JSON в XML.
+
+using System.Text.Json;
 using System.Xml.Serialization;
 
 namespace T2_9
@@ -12,20 +14,17 @@ namespace T2_9
             /*
             MyClass s = new MyClass() { g = 5 };
 
-            using (var stream = File.OpenWrite("serial.xml"))
-            {
-                serialiser.Serialize(stream, s);
-            }
+            
             */
 
-            using (var streamXML = File.OpenRead("serial.xml"))
+            using (var streamJSON = File.OpenRead("serial.json"))
             {
-                MyClass? newMyClass = (MyClass?)serialiser.Deserialize(streamXML);
+                
+                MyClass? newMyClass = JsonSerializer.Deserialize<MyClass>(streamJSON);
 
-                string str = JsonSerializer.Serialize<MyClass>(newMyClass, new JsonSerializerOptions { IncludeFields = true });
-                using (var streamJSON = new StreamWriter("serial.json"))
+                using (var stream = File.OpenWrite("serial1.xml"))
                 {
-                    streamJSON.Write(str);
+                    serialiser.Serialize(stream, newMyClass);
                 }
             }
 
