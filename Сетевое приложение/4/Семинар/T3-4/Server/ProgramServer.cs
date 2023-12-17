@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
@@ -76,13 +77,17 @@ namespace Chat
 
                     if (reciveMessage.NickNameTo == string.Empty)
                     {
+                        Message messageAll = reciveMessage.Clone();
+                        messageAll.NickNameTo = "Всем";
+
                         foreach (var nameClient in clientList.Keys)
                         {
                             if (nameClient.Equals("Сервер"))
                             {
                                 continue;
                             }
-                            new Task(() => { UdpClientSender(clientList[nameClient], recv); }).Start();
+                            
+                            new Task(() => { UdpClientSender(clientList[nameClient], Encoding.Default.GetBytes(messageAll.SerializeMessageToJson())); }).Start();
                         }
                         continue;
                     }
@@ -104,7 +109,7 @@ namespace Chat
 
         static byte[] MakeMessageToSend(string text, DateTime dataTime, string nickNameFrom, string nickNameTo)
         {
-            var messageServer = new Message() { Text = text, DataTime = dataTime, NickNameFrom = nickNameFrom, NickNameTo =  nickNameTo};
+            var messageServer = new Message(text, dataTime, nickNameFrom, nickNameTo);
             return Encoding.Default.GetBytes(messageServer.SerializeMessageToJson());
         }
 

@@ -11,6 +11,14 @@ namespace Chat
 
         public string NickNameTo { get; set; }
 
+        public Message(string text, DateTime dataTime, string nickNameFrom, string nickNameTo)
+        {
+            Text = text;
+            DataTime = dataTime;
+            NickNameFrom = nickNameFrom;
+            NickNameTo = nickNameTo;
+        }
+
         public string SerializeMessageToJson() => JsonSerializer.Serialize(this);
 
         public static Message DeserialiseFromJason(string message) => JsonSerializer.Deserialize<Message>(message);
@@ -18,6 +26,11 @@ namespace Chat
         public override string ToString()
         {
             return $"Время: {DataTime}, От кого: {NickNameFrom}, Кому: {NickNameTo} \n {Text}";
+        }
+
+        public Message Clone()
+        {
+            return new Message(Text, DataTime, NickNameFrom, NickNameTo);
         }
     }
 

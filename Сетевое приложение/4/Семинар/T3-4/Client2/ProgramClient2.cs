@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Chat
 {
@@ -23,7 +24,7 @@ namespace Chat
                 Console.WriteLine("Введите адресат");
                 string addressee = Console.ReadLine();
 
-                var message = new Message() { Text = text, DataTime = DateTime.Now, NickNameFrom = "Клиент2", NickNameTo = addressee };
+                var message = new Message(text, DateTime.Now, "Клиент2", addressee);
 
                 var cli = new Task(() => { UdpClientSender(message.SerializeMessageToJson()); });
                 cli.Start();
