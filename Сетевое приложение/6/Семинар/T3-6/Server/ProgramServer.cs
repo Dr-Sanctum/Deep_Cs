@@ -5,7 +5,7 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            Presenter newPresenter = new Presenter(new MessageSourcetest());
+            Presenter newPresenter = new Presenter(new MessageSource());
             var serverReciver = new Task(newPresenter.UdpServer);
             serverReciver.Start();
             serverReciver.Wait();

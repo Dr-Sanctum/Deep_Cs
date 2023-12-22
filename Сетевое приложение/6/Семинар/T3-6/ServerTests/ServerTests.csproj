@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Client1\Client1.csproj" />
     <ProjectReference Include="..\Server\Server.csproj" />
   </ItemGroup>
 

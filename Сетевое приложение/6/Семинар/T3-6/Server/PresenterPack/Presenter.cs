@@ -13,12 +13,15 @@ namespace Server
 
         private Dictionary<string, IPEndPoint> clientList = new Dictionary<string, IPEndPoint>();
         private IPEndPoint ServerIPEndPoint = new IPEndPoint(IPAddress.Parse("192.168.0.103"), 1234);
-        private IMessageSource MessageSource;
+
+        public IMessageSource MessageSource;
 
         public Presenter(IMessageSource messageSource)
         {
             MessageSource = messageSource;
         }
+
+
 
         public void UdpServer()
         {
@@ -30,9 +33,19 @@ namespace Server
             {
                 client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                 client.Client.Bind(ServerIPEndPoint);
+
                 var clientIPEndPoint = new IPEndPoint(IPAddress.Any, 0000);
+
+                new Task(() =>
+                {
+                    Console.ReadKey(true);
+                    Console.WriteLine("Сервер завершает свою работу");
+                    _cts.Cancel();
+                }).Start();
+
+
                 while (!_ct.IsCancellationRequested)
-               
+
                 {
                     var recv = MessageSource.UdpResiver(client, ref clientIPEndPoint);
 
@@ -77,8 +90,8 @@ namespace Server
                         var messageByteServer = MakeMessageToSend("Вы не зарегистрированы", DateTime.Now, "Сервер", reciveMessage.NickNameFrom);
 
                         new Task(() => { MessageSource.UdpSender(ServerIPEndPoint, clientIPEndPoint, messageByteServer); }).Start();
-                        
-                        
+
+                        _cts.Cancel();
                         continue;
                     }
 
