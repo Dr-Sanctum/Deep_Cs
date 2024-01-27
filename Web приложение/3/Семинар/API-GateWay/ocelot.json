@@ -1,0 +1,58 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/Core/{method}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7291
+        }
+      ],
+      "UpstreamPathTemplate": "/Core/{method}",
+      "UpstreamHttpMethod": [ "Get", "Set" ],
+      "SwaggerKey": "core"
+    },
+    {
+      "DownstreamPathTemplate": "/API-Info/{method}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/API-Info/{method}",
+      "UpstreamHttpMethod": [ "Get", "Set" ],
+      "SwaggerKey": "info"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:6696"
+  },
+
+  "SwaggerEndPoints": [
+    {
+      "Key": "core",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Core API",
+          "Version": "v1",
+          "Url":  "https://localhost:7291/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "info",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Info API",
+          "Version": "v1",
+          "Url": "http://localhost:5001/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}
